@@ -4,6 +4,7 @@
  * and open the template in the editor.
  */
 package proyecto_teoriabd_1;
+
 import java.awt.Color;
 import java.sql.Statement;
 import java.sql.*;
@@ -16,6 +17,14 @@ import com.itextpdf.text.DocumentException;
 import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
 import java.io.FileOutputStream;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.Calendar;
+import javax.swing.DefaultComboBoxModel;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author Tyler C
@@ -27,7 +36,20 @@ public class main extends javax.swing.JFrame {
      */
     public main() {
         initComponents();
-        //this.JB_Start_main.setBackground(Color.red);
+        DefaultComboBoxModel modelo
+                = (DefaultComboBoxModel) this.JCB_CustomerName_main.getModel();
+        DefaultComboBoxModel modelo1
+                = (DefaultComboBoxModel) this.JCB_EmployeeName_main.getModel();
+        DefaultComboBoxModel modelo2
+                = (DefaultComboBoxModel) this.JCB_ShipperName_main.getModel();
+        DefaultComboBoxModel modelo3
+                = (DefaultComboBoxModel) this.JCB_Country_main.getModel();
+        MariaDB conn = new MariaDB();
+        conn.connectNorthwind();
+        modelo = conn.showCompanyName(modelo);
+        modelo1 = conn.showEmployeeName(modelo1);
+        modelo2 = conn.showShipper(modelo2);
+        modelo3 = conn.showCountry(modelo3);
     }
 
     /**
@@ -39,8 +61,26 @@ public class main extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        JD_AddProducts = new javax.swing.JDialog();
+        main_JPanel_AddProducts = new javax.swing.JPanel();
+        JL_BuscarProductos = new javax.swing.JLabel();
+        JL_Nombre = new javax.swing.JLabel();
+        JL_ID = new javax.swing.JLabel();
+        JL_Stock = new javax.swing.JLabel();
+        JL_Precio = new javax.swing.JLabel();
+        JL_Cantidad = new javax.swing.JLabel();
+        JSpinner_CantSpinner = new javax.swing.JSpinner();
+        JB_SearchProducto = new javax.swing.JButton();
+        JT_Nombre_addP = new javax.swing.JTextField();
+        JT_Stock_addP = new javax.swing.JTextField();
+        JT_Precio_addP = new javax.swing.JTextField();
+        JT_ID_addP = new javax.swing.JTextField();
+        JB_AddProductToCart_addP = new javax.swing.JButton();
+        JL_Discount = new javax.swing.JLabel();
+        JT_Discount_addP = new javax.swing.JTextField();
+        JL_addProducts_Background = new javax.swing.JLabel();
         main_JPanel = new javax.swing.JPanel();
-        JB_Start_main = new javax.swing.JButton();
+        JB_GenerateOrder_main = new javax.swing.JButton();
         JL_ShipperName_main = new javax.swing.JLabel();
         JL_CustomerName_main = new javax.swing.JLabel();
         JL_ShipName_main = new javax.swing.JLabel();
@@ -51,22 +91,108 @@ public class main extends javax.swing.JFrame {
         JL_ShipCity_main = new javax.swing.JLabel();
         JL_ShipPostalCode_main = new javax.swing.JLabel();
         JL_Country_main = new javax.swing.JLabel();
-        JL_Country_main1 = new javax.swing.JLabel();
-        jComboBox1 = new javax.swing.JComboBox<>();
+        JL_GenerateNewOrder = new javax.swing.JLabel();
+        JCB_CustomerName_main = new javax.swing.JComboBox<>();
+        JCB_ShipperName_main = new javax.swing.JComboBox<>();
+        JCB_EmployeeName_main = new javax.swing.JComboBox<>();
+        JCB_Country_main = new javax.swing.JComboBox<>();
+        JT_ShipRegion_main = new javax.swing.JTextField();
+        JT_ShipCity_main = new javax.swing.JTextField();
+        JT_ShipPostalCode_main = new javax.swing.JTextField();
+        JT_ShipName_main = new javax.swing.JTextField();
+        JT_Weight_main = new javax.swing.JTextField();
+        JT_ShipAddress_main = new javax.swing.JTextField();
+        JB_AddProducts = new javax.swing.JButton();
+        JB_PrintPDF = new javax.swing.JButton();
         background_main = new javax.swing.JLabel();
+
+        main_JPanel_AddProducts.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        JL_BuscarProductos.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        JL_BuscarProductos.setForeground(new java.awt.Color(0, 0, 0));
+        JL_BuscarProductos.setText("Buscar Productos");
+        main_JPanel_AddProducts.add(JL_BuscarProductos, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 20, -1, -1));
+
+        JL_Nombre.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        JL_Nombre.setForeground(new java.awt.Color(0, 0, 0));
+        JL_Nombre.setText("Nombre: ");
+        main_JPanel_AddProducts.add(JL_Nombre, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 60, -1, -1));
+
+        JL_ID.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        JL_ID.setForeground(new java.awt.Color(0, 0, 0));
+        JL_ID.setText("ID: ");
+        main_JPanel_AddProducts.add(JL_ID, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 110, -1, -1));
+
+        JL_Stock.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        JL_Stock.setForeground(new java.awt.Color(0, 0, 0));
+        JL_Stock.setText("Stock: ");
+        main_JPanel_AddProducts.add(JL_Stock, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 60, -1, -1));
+
+        JL_Precio.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        JL_Precio.setForeground(new java.awt.Color(0, 0, 0));
+        JL_Precio.setText("Precio: ");
+        main_JPanel_AddProducts.add(JL_Precio, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 110, -1, -1));
+
+        JL_Cantidad.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        JL_Cantidad.setForeground(new java.awt.Color(0, 0, 0));
+        JL_Cantidad.setText("Cantidad: ");
+        main_JPanel_AddProducts.add(JL_Cantidad, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 150, -1, -1));
+        main_JPanel_AddProducts.add(JSpinner_CantSpinner, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 150, -1, -1));
+
+        JB_SearchProducto.setBackground(new java.awt.Color(102, 102, 255));
+        JB_SearchProducto.setText("Search Products");
+        JB_SearchProducto.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                JB_SearchProductoActionPerformed(evt);
+            }
+        });
+        main_JPanel_AddProducts.add(JB_SearchProducto, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 200, -1, -1));
+        main_JPanel_AddProducts.add(JT_Nombre_addP, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 60, 80, -1));
+        main_JPanel_AddProducts.add(JT_Stock_addP, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 60, 90, -1));
+        main_JPanel_AddProducts.add(JT_Precio_addP, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 110, 90, -1));
+        main_JPanel_AddProducts.add(JT_ID_addP, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 110, 80, -1));
+
+        JB_AddProductToCart_addP.setBackground(new java.awt.Color(102, 102, 255));
+        JB_AddProductToCart_addP.setText("Add Product");
+        JB_AddProductToCart_addP.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                JB_AddProductToCart_addPActionPerformed(evt);
+            }
+        });
+        main_JPanel_AddProducts.add(JB_AddProductToCart_addP, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 200, 100, -1));
+
+        JL_Discount.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        JL_Discount.setForeground(new java.awt.Color(0, 0, 0));
+        JL_Discount.setText("Discount: ");
+        main_JPanel_AddProducts.add(JL_Discount, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 150, -1, -1));
+        main_JPanel_AddProducts.add(JT_Discount_addP, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 150, 90, -1));
+
+        JL_addProducts_Background.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/addProducts.jpg"))); // NOI18N
+        main_JPanel_AddProducts.add(JL_addProducts_Background, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
+
+        javax.swing.GroupLayout JD_AddProductsLayout = new javax.swing.GroupLayout(JD_AddProducts.getContentPane());
+        JD_AddProducts.getContentPane().setLayout(JD_AddProductsLayout);
+        JD_AddProductsLayout.setHorizontalGroup(
+            JD_AddProductsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(main_JPanel_AddProducts, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+        );
+        JD_AddProductsLayout.setVerticalGroup(
+            JD_AddProductsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(main_JPanel_AddProducts, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+        );
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         main_JPanel.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        JB_Start_main.setBackground(new java.awt.Color(255, 255, 153));
-        JB_Start_main.setText("Start");
-        JB_Start_main.addActionListener(new java.awt.event.ActionListener() {
+        JB_GenerateOrder_main.setBackground(new java.awt.Color(255, 255, 153));
+        JB_GenerateOrder_main.setText("Generate Order");
+        JB_GenerateOrder_main.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                JB_Start_mainActionPerformed(evt);
+                JB_GenerateOrder_mainActionPerformed(evt);
             }
         });
-        main_JPanel.add(JB_Start_main, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 300, -1, -1));
+        main_JPanel.add(JB_GenerateOrder_main, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 260, 120, -1));
 
         JL_ShipperName_main.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         JL_ShipperName_main.setForeground(new java.awt.Color(255, 255, 255));
@@ -118,13 +244,46 @@ public class main extends javax.swing.JFrame {
         JL_Country_main.setText("Country:");
         main_JPanel.add(JL_Country_main, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 170, -1, -1));
 
-        JL_Country_main1.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
-        JL_Country_main1.setForeground(new java.awt.Color(255, 255, 255));
-        JL_Country_main1.setText("Generate New Order");
-        main_JPanel.add(JL_Country_main1, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 0, -1, -1));
+        JL_GenerateNewOrder.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
+        JL_GenerateNewOrder.setForeground(new java.awt.Color(255, 255, 255));
+        JL_GenerateNewOrder.setText("Generate New Order");
+        main_JPanel.add(JL_GenerateNewOrder, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 0, -1, -1));
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Select.." }));
-        main_JPanel.add(jComboBox1, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 50, 140, -1));
+        JCB_CustomerName_main.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Select.." }));
+        main_JPanel.add(JCB_CustomerName_main, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 50, 140, -1));
+
+        JCB_ShipperName_main.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Select..." }));
+        main_JPanel.add(JCB_ShipperName_main, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 90, 140, -1));
+
+        JCB_EmployeeName_main.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Select..." }));
+        main_JPanel.add(JCB_EmployeeName_main, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 170, 140, -1));
+
+        JCB_Country_main.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Select..." }));
+        main_JPanel.add(JCB_Country_main, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 170, 150, -1));
+        main_JPanel.add(JT_ShipRegion_main, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 50, 140, -1));
+        main_JPanel.add(JT_ShipCity_main, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 90, 140, -1));
+        main_JPanel.add(JT_ShipPostalCode_main, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 130, 140, -1));
+        main_JPanel.add(JT_ShipName_main, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 130, 140, -1));
+        main_JPanel.add(JT_Weight_main, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 210, 140, -1));
+        main_JPanel.add(JT_ShipAddress_main, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 250, 140, -1));
+
+        JB_AddProducts.setBackground(new java.awt.Color(255, 255, 153));
+        JB_AddProducts.setText("Add Products");
+        JB_AddProducts.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                JB_AddProductsActionPerformed(evt);
+            }
+        });
+        main_JPanel.add(JB_AddProducts, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 290, 120, -1));
+
+        JB_PrintPDF.setBackground(new java.awt.Color(255, 255, 153));
+        JB_PrintPDF.setText("Print PDF");
+        JB_PrintPDF.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                JB_PrintPDFActionPerformed(evt);
+            }
+        });
+        main_JPanel.add(JB_PrintPDF, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 290, -1, -1));
 
         background_main.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/delivery_background.jpg"))); // NOI18N
         main_JPanel.add(background_main, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 620, 340));
@@ -143,28 +302,151 @@ public class main extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void JB_Start_mainActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JB_Start_mainActionPerformed
+    private void JB_GenerateOrder_mainActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JB_GenerateOrder_mainActionPerformed
         // TODO add your handling code here:
         MariaDB conn = new MariaDB();
         Statement stm = null;
         conn.connectNorthwind();
-        conn.pdfCreator();
-//        conn.test();
-//        Connection con = conn.getDbcon();
+
+        //Textfields
+        String shipRegion = JT_ShipRegion_main.getText();
+        String shipName = JT_ShipName_main.getText();
+        String shipCity = JT_ShipCity_main.getText();
+        String shipPostalCode = JT_ShipPostalCode_main.getText();
+        String shipWeight = JT_Weight_main.getText();
+        String shipAddress = JT_ShipAddress_main.getText();
+
+        //comboBox
+        String customerName = JCB_CustomerName_main.getSelectedItem().toString();
+        String shipperName = JCB_ShipperName_main.getSelectedItem().toString();
+        String employeeName = JCB_EmployeeName_main.getSelectedItem().toString();
+        String country = JCB_Country_main.getSelectedItem().toString();
+
+        Date currentDate = new Date();
+        Date _currentDate = new Date();
+        SimpleDateFormat dateFormatCurrent = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+        String currentDateFormat = dateFormatCurrent.format(currentDate);
+//        System.out.println("String date: " +currentDateFormat);
 //        try {
-//            stm = con.createStatement();
-//            stm.executeQuery("Select * from customers");
-//            ResultSet rs = stm.executeQuery("Select * from customers");
-//            while (rs.next()) {
-//            }
-//             System.out.println("registry: " + rs.getString(1));
-//        } catch (SQLException ex) {
-//            Logger.getLogger(main.class.getName()).log(Level.SEVERE, null, ex);
+//            currentDate = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss").parse(currentDateFormat);
+//            _currentDate = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss").parse(currentDateFormat);
+//        } catch (Exception e) {
+//            e.printStackTrace();
 //        }
+//        System.out.println("_currentDate:" + _currentDate);
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(currentDate);
+        cal.add(Calendar.DAY_OF_MONTH, 2);
+        Date datePlus2 = cal.getTime();
+
+        String plustwoDateFormat = dateFormatCurrent.format(datePlus2);
+
+        System.out.println("currentDate: " + currentDateFormat);
+        System.out.println("currentDate +2: " + plustwoDateFormat);
+
+        conn.insertIntoOrder(customerName, employeeName, currentDateFormat, plustwoDateFormat, shipperName, shipWeight, shipName, shipAddress,
+                shipCity, shipRegion, shipPostalCode, country);
+        //String customerName, String employeeName, Date currentDate, Date datePlus2, String shipperName, String shipWeight, String shipName,
+        //String shipAddress, String shipCity, String shipRegion, String shipPostalCode, String country
         conn.disconnectNorthwind();
+
+    }//GEN-LAST:event_JB_GenerateOrder_mainActionPerformed
+
+    private void JB_AddProductsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JB_AddProductsActionPerformed
+        // TODO add your handling code here:
+        JD_AddProducts.setModal(true);
+        JD_AddProducts.pack();
+        JD_AddProducts.setLocationRelativeTo(this);
+        JD_AddProducts.setVisible(true);
+
+
+    }//GEN-LAST:event_JB_AddProductsActionPerformed
+
+    private void JB_SearchProductoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JB_SearchProductoActionPerformed
+        // TODO add your handling code here:
+        String productName = JOptionPane.showInputDialog(null, "Input product name: ");
+        System.out.println("pname" + productName);
+        MariaDB conn = new MariaDB();
+        conn.connectNorthwind();
+        conn.searchProduct(productName);
+        JT_Nombre_addP.setText(conn.getProductName());
+        JT_ID_addP.setText(conn.getProductID());
+        JT_Precio_addP.setText(conn.getProductPrice());
+        JT_Stock_addP.setText(conn.getProductstock());
+
+        conn.disconnectNorthwind();
+    }//GEN-LAST:event_JB_SearchProductoActionPerformed
+
+    private void JB_AddProductToCart_addPActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JB_AddProductToCart_addPActionPerformed
+        // TODO add your handling code here:
+        MariaDB conn = new MariaDB();
+        conn.connectNorthwind();
+        //conn.insertProductIntoOrderDetails();
+
+        //info products
+        String productName = JT_Nombre_addP.getText();
+        String productID = JT_ID_addP.getText();
+        String productStock = JT_Stock_addP.getText();
+        String productPrice = JT_Precio_addP.getText();
+        String productAmount = JSpinner_CantSpinner.getValue().toString();
+        String productDiscount = JT_Discount_addP.getText();
+        Double discount = Double.parseDouble(productDiscount);
+        if (discount >= 0 && discount <= 1) {
+            conn.productID(productName);
+            conn.insertProductIntoOrderDetails(productName, productID, productStock, productPrice, productAmount, productDiscount);
+            JOptionPane.showMessageDialog(null, "Product successfully inserted into OrderDetails with OrderID: " + conn.getOrderID());
+            JT_Nombre_addP.setText("");
+            JT_ID_addP.setText("");
+            JT_Stock_addP.setText("");
+            JT_Precio_addP.setText("");
+            JSpinner_CantSpinner.setValue(0);
+            JT_Discount_addP.setText("");
+        } else {
+            JOptionPane.showMessageDialog(null, "Discount value must be withtin the range of 0-1");
+            JT_Discount_addP.setText("");
+        }
+        conn.disconnectNorthwind();
+    }//GEN-LAST:event_JB_AddProductToCart_addPActionPerformed
+
+    private void JB_PrintPDFActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JB_PrintPDFActionPerformed
+        // TODO add your handling code here:
+        MariaDB conn = new MariaDB();
+        conn.connectNorthwind();
+
+//        //Textfields
+//        String shipRegion = JT_ShipRegion_main.getText();
+//        String shipName = JT_ShipName_main.getText();
+//        String shipCity = JT_ShipCity_main.getText();
+//        String shipPostalCode = JT_ShipPostalCode_main.getText();
+//        String shipWeight = JT_Weight_main.getText();
+//        String shipAddress = JT_ShipAddress_main.getText();
+//
+//        //comboBox
+//        String customerName = JCB_CustomerName_main.getSelectedItem().toString();
+//        String shipperName = JCB_ShipperName_main.getSelectedItem().toString();
+//        String employeeName = JCB_EmployeeName_main.getSelectedItem().toString();
+//        String country = JCB_Country_main.getSelectedItem().toString();
+//
+//        //oderId, customerId, employeeId, orderDate, requiredDate,ShippedDate, shipDate, shipVia, freight, 
+//        //shipName, shipAddress, shipCity, shipRegion, shipPostalCode, shipCountry
+//        Date currentDate = new Date();
+//        Calendar cal = Calendar.getInstance();
+//        cal.setTime(currentDate);
+//        cal.add(Calendar.DAY_OF_MONTH, 2);
+//        Date datePlus2 = cal.getTime();
         
-    }//GEN-LAST:event_JB_Start_mainActionPerformed
-    
+        
+        
+        String orderID = conn.getOrderID();
+        String[] data = conn.retriveInfoForPDF();
+        //orderID, country, currentDate, datePlus2, employeeName, shipRegion, shipName, shipCity,
+        //shipPostalCode, shipWeight, shipAddress, customerName, shipperName
+        conn.pdfCreator(data[0], data[1], data[2], data[3], data[4], data[5], data[6], data[7], 
+                data[8], data[9], data[10], data[11], data[12]);
+        conn.disconnectNorthwind();
+
+    }//GEN-LAST:event_JB_PrintPDFActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -201,20 +483,49 @@ public class main extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton JB_Start_main;
+    private javax.swing.JButton JB_AddProductToCart_addP;
+    private javax.swing.JButton JB_AddProducts;
+    private javax.swing.JButton JB_GenerateOrder_main;
+    private javax.swing.JButton JB_PrintPDF;
+    private javax.swing.JButton JB_SearchProducto;
+    private javax.swing.JComboBox<String> JCB_Country_main;
+    private javax.swing.JComboBox<String> JCB_CustomerName_main;
+    private javax.swing.JComboBox<String> JCB_EmployeeName_main;
+    private javax.swing.JComboBox<String> JCB_ShipperName_main;
+    private javax.swing.JDialog JD_AddProducts;
+    private javax.swing.JLabel JL_BuscarProductos;
+    private javax.swing.JLabel JL_Cantidad;
     private javax.swing.JLabel JL_Country_main;
-    private javax.swing.JLabel JL_Country_main1;
     private javax.swing.JLabel JL_CustomerName_main;
+    private javax.swing.JLabel JL_Discount;
     private javax.swing.JLabel JL_Employee_Name_main;
+    private javax.swing.JLabel JL_GenerateNewOrder;
+    private javax.swing.JLabel JL_ID;
+    private javax.swing.JLabel JL_Nombre;
+    private javax.swing.JLabel JL_Precio;
     private javax.swing.JLabel JL_ShipAddress_main;
     private javax.swing.JLabel JL_ShipCity_main;
     private javax.swing.JLabel JL_ShipName_main;
     private javax.swing.JLabel JL_ShipPostalCode_main;
     private javax.swing.JLabel JL_ShipRegion_main;
     private javax.swing.JLabel JL_ShipperName_main;
+    private javax.swing.JLabel JL_Stock;
     private javax.swing.JLabel JL_Weight_main;
+    private javax.swing.JLabel JL_addProducts_Background;
+    private javax.swing.JSpinner JSpinner_CantSpinner;
+    private javax.swing.JTextField JT_Discount_addP;
+    private javax.swing.JTextField JT_ID_addP;
+    private javax.swing.JTextField JT_Nombre_addP;
+    private javax.swing.JTextField JT_Precio_addP;
+    private javax.swing.JTextField JT_ShipAddress_main;
+    private javax.swing.JTextField JT_ShipCity_main;
+    private javax.swing.JTextField JT_ShipName_main;
+    private javax.swing.JTextField JT_ShipPostalCode_main;
+    private javax.swing.JTextField JT_ShipRegion_main;
+    private javax.swing.JTextField JT_Stock_addP;
+    private javax.swing.JTextField JT_Weight_main;
     private javax.swing.JLabel background_main;
-    private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JPanel main_JPanel;
+    private javax.swing.JPanel main_JPanel_AddProducts;
     // End of variables declaration//GEN-END:variables
 }
